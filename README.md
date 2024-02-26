@@ -1,0 +1,2 @@
+# MagicCube
+FinalProject(ReboticaSchool)
