@@ -21,10 +21,18 @@ public class CubeControlSystem : MonoBehaviour
     {
         for(int i = 0; i<points.Length; i++)
         {
-                if (points[i].isTrueObj==false)
+            if (points[i].isTrueObj==false)
+            {
+                return;
+            }
+            
+            else if (points[i].isTrueObj == true)
+            {
+                if(i==points.Length-1)
                 {
-                    break;
-                }          
+                    Debug.Log("Win");
+                }
+            }
         }
     }
 }

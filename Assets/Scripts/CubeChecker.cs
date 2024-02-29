@@ -4,7 +4,7 @@ public class CubeChecker : MonoBehaviour
 {
     [SerializeField] private GameObject trueGameObject;
 
-    private bool _isTrueObject = false;
+    [SerializeField ]private bool _isTrueObject = false;
 
     public bool isTrueObj
     {
@@ -21,7 +21,7 @@ public class CubeChecker : MonoBehaviour
         {
             if (other.gameObject == trueGameObject)
             {
-                Debug.Log(true);
+                //Debug.Log(true);
                 isTrueObj = true;
                 CubeControlSystem.Instance.CheckWin();
             }
@@ -32,5 +32,13 @@ public class CubeChecker : MonoBehaviour
             }
         }
         
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject == trueGameObject)
+        {
+            isTrueObj = false;
+        }
     }
 }
