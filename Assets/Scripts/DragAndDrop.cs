@@ -27,10 +27,8 @@ public class DragAndDrop : MonoBehaviour
     private void OnDisable()
     {
         mouseClick.performed -= MousePressed;
-        mouseClick.Disable();
-        
-    }
-    
+        mouseClick.Disable();        
+    }    
     private void MousePressed(InputAction.CallbackContext context)
     {
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -41,8 +39,7 @@ public class DragAndDrop : MonoBehaviour
             {
                 StartCoroutine(DragUpdate(hit.collider.gameObject));
             }
-        }
-            
+        }        
     }
 
     private IEnumerator DragUpdate(GameObject clickedObject)
