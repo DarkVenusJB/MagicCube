@@ -5,12 +5,20 @@ public class CubeChecker : MonoBehaviour
     [SerializeField] private GameObject trueGameObject;
 
     [SerializeField ]private bool _isTrueObject = false;
+    [SerializeField] private bool _isEmptyPoint =true;
 
     public bool isTrueObj
     {
         get { return _isTrueObject; }
 
         private set { _isTrueObject = value; }
+    }
+
+    public bool isEmptyPoint
+    {
+        get { return _isEmptyPoint; }
+
+        private set { _isEmptyPoint = value; }  
     }
 
    
@@ -24,7 +32,14 @@ public class CubeChecker : MonoBehaviour
                 isTrueObj = true;
                 CubeControlSystem.Instance.CheckWin();
             }          
-        }    
+        }
+
+        isEmptyPoint = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        isEmptyPoint = false;
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,5 +48,7 @@ public class CubeChecker : MonoBehaviour
         {
             isTrueObj = false;
         }
+
+        isEmptyPoint = true;
     }
 }
