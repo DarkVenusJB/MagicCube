@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CubeControlSystem : MonoBehaviour
 {
-    [SerializeField] CubeChecker[] points;
-    [SerializeField]private Transform[] pointsTransform;
+    [SerializeField] private CubeChecker[] points;
+    
+    private Transform[] pointsTransform;
 
     
     

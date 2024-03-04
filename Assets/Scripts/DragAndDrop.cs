@@ -83,7 +83,7 @@ public class DragAndDrop : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             if(rb!= null)
             {
-                Vector3 delta = new Vector3(0, 0.6f, 0);
+                Vector3 delta = new Vector3(0, 0.7f, 0);
                 Vector3 direction = ray.GetPoint(initialDistance)  - (clickedObject.transform.position-delta);
                 
                 rb.velocity = direction * mouseDragPhysicsSpeed;

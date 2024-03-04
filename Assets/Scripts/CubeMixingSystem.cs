@@ -16,7 +16,6 @@ public class CubeMixingSystem : MonoBehaviour
         for (int i = 0; i<cubesPosition.Length; i++)
         {
             currentPosition = cubesPosition[i];
-             int randomIndex = Random.Range(0, cubesPosition.Length);
 
             if (i+1<cubesPosition.Length)
             {
@@ -29,8 +28,6 @@ public class CubeMixingSystem : MonoBehaviour
                 cubesPosition[i].position = cubesPosition[0].position;
                 cubesPosition[0].position = currentPosition.position;
             }
-            
-
         }
     }
 }
