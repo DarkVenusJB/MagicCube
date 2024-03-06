@@ -39,10 +39,10 @@ public class DragAndDrop : MonoBehaviour
         mouseUp.performed -= MouseReleased;
         mouseClick.Disable();
         mouseUp.Disable();
-    }    
+    } 
+    
     private void MousePressed(InputAction.CallbackContext context)
-    {
-        
+    {        
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
@@ -71,9 +71,7 @@ public class DragAndDrop : MonoBehaviour
             }
         }
         
-    }
-
-        
+    }       
 
     private IEnumerator DragUpdate(GameObject clickedObject)
     {
@@ -84,36 +82,23 @@ public class DragAndDrop : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             float distance = Vector3.Distance(clickedObject.transform.position, ray.GetPoint(initialDistance));
             Debug.Log(distance);
-            if (Math.Abs(initialDistance)<= maxDistanceBetweenMouse)
+
+            if (rb != null)
             {
-                if (rb != null)
-                {
+                Vector3 delta = new Vector3(0, 0.7f, 0);
+                Vector3 direction = ray.GetPoint(initialDistance) - (clickedObject.transform.position - delta);
+                rb.velocity = direction * mouseDragPhysicsSpeed;
 
-                    Vector3 delta = new Vector3(0, 0.7f, 0);
-
-                    Vector3 direction = ray.GetPoint(initialDistance) - (clickedObject.transform.position - delta);
-
-                    rb.velocity = direction * mouseDragPhysicsSpeed;
-
-                    yield return waitForFixedUpdate;
-                }
-
-                else
-                {
-                    clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position,
-                        ray.GetPoint(initialDistance), ref velocity, mouseDragTransformSpeeed);
-
-                    yield return null;
-                }
+                yield return waitForFixedUpdate;
             }
 
             else
             {
-                CubeControlSystem.Instance.ReturnToNearPoint(clickedObject);
+                clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position,
+                ray.GetPoint(initialDistance), ref velocity, mouseDragTransformSpeeed);
 
                 yield return null;
-            }
-            
+            }           
         }
     }
 }
