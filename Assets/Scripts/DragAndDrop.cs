@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -81,23 +82,38 @@ public class DragAndDrop : MonoBehaviour
         while(mouseClick.ReadValue<float>()!=0)
         {
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if(rb!= null)
+            float distance = Vector3.Distance(clickedObject.transform.position, ray.GetPoint(initialDistance));
+            Debug.Log(distance);
+            if (Math.Abs(initialDistance)<= maxDistanceBetweenMouse)
             {
-                Vector3 delta = new Vector3(0, 0.7f, 0);
-                Vector3 direction = ray.GetPoint(initialDistance)  - (clickedObject.transform.position-delta);
-                
-                rb.velocity = direction * mouseDragPhysicsSpeed;
+                if (rb != null)
+                {
 
-                yield return waitForFixedUpdate;
+                    Vector3 delta = new Vector3(0, 0.7f, 0);
+
+                    Vector3 direction = ray.GetPoint(initialDistance) - (clickedObject.transform.position - delta);
+
+                    rb.velocity = direction * mouseDragPhysicsSpeed;
+
+                    yield return waitForFixedUpdate;
+                }
+
+                else
+                {
+                    clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position,
+                        ray.GetPoint(initialDistance), ref velocity, mouseDragTransformSpeeed);
+
+                    yield return null;
+                }
             }
 
             else
             {
-                clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position, 
-                    ray.GetPoint(initialDistance), ref velocity, mouseDragTransformSpeeed);
+                CubeControlSystem.Instance.ReturnToNearPoint(clickedObject);
 
                 yield return null;
             }
+            
         }
     }
 }
