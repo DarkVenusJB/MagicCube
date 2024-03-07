@@ -14,6 +14,7 @@ public class DragAndDrop : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Camera mainCamera;
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+    private GameObject dragObject;
 
     private void Awake()
     {
@@ -48,30 +49,24 @@ public class DragAndDrop : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if(hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Draggable"))
+            dragObject = hit.collider.gameObject;
+
+            if(hit.collider != null && dragObject.gameObject.layer == LayerMask.NameToLayer("Draggable"))
             {
-                hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                StartCoroutine(DragUpdate(hit.collider.gameObject)); 
-                
+               // hit.collider.gameObject.TryGetComponent<CubeMoveble>(out var cube);              
+               // cube.IsDraging = true;
+                dragObject.GetComponent<Rigidbody>().isKinematic = false;
+                StartCoroutine(DragUpdate(hit.collider.gameObject));               
             }
         }        
     }
 
     private void MouseReleased(InputAction.CallbackContext context)
     {
-        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Draggable"))
-            {
-                hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                CubeControlSystem.Instance.ReturnToNearPoint(hit.collider.gameObject);
-            }
-        }
-        
-    }       
+        dragObject.GetComponent<Rigidbody>().isKinematic = true;
+        CubeControlSystem.Instance.ReturnToNearPoint(dragObject);
+    }  
+    
 
     private IEnumerator DragUpdate(GameObject clickedObject)
     {
@@ -80,8 +75,6 @@ public class DragAndDrop : MonoBehaviour
         while(mouseClick.ReadValue<float>()!=0)
         {
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            float distance = Vector3.Distance(clickedObject.transform.position, ray.GetPoint(initialDistance));
-            Debug.Log(distance);
 
             if (rb != null)
             {

@@ -5,9 +5,7 @@ public class CubeControlSystem : MonoBehaviour
     [SerializeField] private CubeChecker[] points;
     
     private Transform[] pointsTransform;
-
-    
-    
+  
     public static CubeControlSystem Instance { get; private set; }
 
     private void Awake()
@@ -30,7 +28,6 @@ public class CubeControlSystem : MonoBehaviour
             pointsTransform[i] = points[i].transform;
         }
     }
-
 
     public void CheckWin()
     {
@@ -55,8 +52,8 @@ public class CubeControlSystem : MonoBehaviour
     {
         float minDistance = 100;
         float currentDistance;
-        Transform nearPoint=null;
-        for(int i =0; i<pointsTransform.Length;i++)
+        Transform nearPoint = null;
+        for (int i = 0; i < pointsTransform.Length; i++)
         {
             currentDistance = Vector3.Distance(currentObject.transform.position, pointsTransform[i].position);
 
@@ -67,8 +64,7 @@ public class CubeControlSystem : MonoBehaviour
                 Debug.Log(points[i].gameObject.name);
             }
         }
-        
-        currentObject.transform.position = nearPoint.position;
 
+        currentObject.transform.position = nearPoint.position;
     }
 }
