@@ -43,6 +43,7 @@ public class CubeControlSystem : MonoBehaviour
                 if(i==points.Length-1)
                 {
                     Debug.Log("Win");
+                    EventSystem.OnWin();
                 }
             }
         }
@@ -61,7 +62,6 @@ public class CubeControlSystem : MonoBehaviour
             {
                 minDistance = currentDistance;
                 nearPoint = pointsTransform[i];
-                Debug.Log(points[i].gameObject.name);
             }
         }
 

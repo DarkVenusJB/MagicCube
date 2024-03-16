@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
 
 public class DragAndDrop : MonoBehaviour
 {
@@ -19,10 +17,6 @@ public class DragAndDrop : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-    }
-
-    private void Start()
-    {      
         mainCamera = Camera.main;
     }
 
@@ -53,8 +47,6 @@ public class DragAndDrop : MonoBehaviour
 
             if(hit.collider != null && dragObject.gameObject.layer == LayerMask.NameToLayer("Draggable"))
             {
-               // hit.collider.gameObject.TryGetComponent<CubeMoveble>(out var cube);              
-               // cube.IsDraging = true;
                 dragObject.GetComponent<Rigidbody>().isKinematic = false;
                 StartCoroutine(DragUpdate(hit.collider.gameObject));               
             }
