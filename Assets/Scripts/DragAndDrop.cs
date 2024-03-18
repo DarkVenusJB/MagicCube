@@ -13,11 +13,13 @@ public class DragAndDrop : MonoBehaviour
     private Camera mainCamera;
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     private GameObject dragObject;
+    
 
     private void Awake()
     {
         Application.targetFrameRate = 60;
         mainCamera = Camera.main;
+        
     }
 
     private void OnEnable()
@@ -45,7 +47,7 @@ public class DragAndDrop : MonoBehaviour
         {
             dragObject = hit.collider.gameObject;
 
-            if(hit.collider != null && dragObject.gameObject.layer == LayerMask.NameToLayer("Draggable"))
+            if(hit.collider != null && dragObject.layer == LayerMask.NameToLayer("Draggable"))
             {
                 dragObject.GetComponent<Rigidbody>().isKinematic = false;
                 StartCoroutine(DragUpdate(hit.collider.gameObject));               
@@ -55,8 +57,12 @@ public class DragAndDrop : MonoBehaviour
 
     private void MouseReleased(InputAction.CallbackContext context)
     {
-        dragObject.GetComponent<Rigidbody>().isKinematic = true;
-        CubeControlSystem.Instance.ReturnToNearPoint(dragObject);
+        if (dragObject.layer == LayerMask.NameToLayer("Draggable"))
+        {
+            dragObject.GetComponent<Rigidbody>().isKinematic = true;
+            CubeControlSystem.Instance.ReturnToNearPoint(dragObject);
+        }
+       
     }  
     
 
