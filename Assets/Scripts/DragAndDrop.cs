@@ -61,6 +61,7 @@ public class DragAndDrop : MonoBehaviour
         {
             dragObject.GetComponent<Rigidbody>().isKinematic = true;
             CubeControlSystem.Instance.ReturnToNearPoint(dragObject);
+            EventSystem.OnBlockMove();
         }
        
     }  
