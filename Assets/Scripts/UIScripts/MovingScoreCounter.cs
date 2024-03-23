@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class CubeMoveCounter : MonoBehaviour
+public class MovingScoreCounter : MonoBehaviour
 {
     private TMP_Text moveCounterTXT;
     private int moveCounter;
@@ -14,21 +14,29 @@ public class CubeMoveCounter : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.BlockMoveEvent += onBlockMove;
+        EventSystem.BlockMoveEvent += OnBlockMove;
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
     }
 
     private void OnDisable()
     {
-        EventSystem.BlockMoveEvent -= onBlockMove;
+        EventSystem.BlockMoveEvent -= OnBlockMove;
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
     }
 
-    private void onBlockMove()
+    private void OnBlockMove()
     {
         moveCounter++;
         if (moveCounterTXT!=null)
         {
             SetText();
         }     
+    }
+
+    private void OnLevelRestarted()
+    {
+        moveCounter = 0;
+        SetText();
     }
 
     private void SetText()

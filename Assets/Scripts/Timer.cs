@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,22 @@ public class Timer : MonoBehaviour
     {
         timerTXT = GetComponent<TMP_Text>();
     }
+
+    private void OnEnable()
+    {
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
+    }
+
+    private void OnLevelRestarted()
+    {
+        startTime = 0f;
+    }
+
     private void Update()
     {
         startTime += Time.deltaTime;
@@ -21,3 +38,4 @@ public class Timer : MonoBehaviour
         timerTXT.text = timerSTR;
     }
 }
+

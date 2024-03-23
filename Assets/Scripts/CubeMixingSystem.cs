@@ -11,6 +11,16 @@ public class CubeMixingSystem : MonoBehaviour
         Mix();
     }
 
+    private void OnEnable()
+    {
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.LevelRestartedEvent += OnLevelRestarted;
+    }  
+
     private void Mix()
     {
         for (int i = 0; i<cubesPosition.Length; i++)
@@ -29,5 +39,10 @@ public class CubeMixingSystem : MonoBehaviour
                 cubesPosition[0].position = currentPosition.position;
             }
         }
+    }
+
+    private void OnLevelRestarted()
+    {
+        Mix();
     }
 }
