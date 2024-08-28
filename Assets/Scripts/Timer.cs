@@ -1,10 +1,10 @@
-using System;
 using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] private float startTime;
+
     private TMP_Text timerTXT;
 
     private void Start()

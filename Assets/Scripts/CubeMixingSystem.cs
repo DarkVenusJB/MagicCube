@@ -6,10 +6,8 @@ public class CubeMixingSystem : MonoBehaviour
 
     private Transform currentPosition;
 
-    private void Start()
-    {
-        Mix();
-    }
+    private void Start() => Mix();
+    
 
     private void OnEnable()
     {
@@ -18,7 +16,7 @@ public class CubeMixingSystem : MonoBehaviour
 
     private void OnDisable()
     {
-        EventSystem.LevelRestartedEvent += OnLevelRestarted;
+        EventSystem.LevelRestartedEvent -= OnLevelRestarted;
     }  
 
     private void Mix()
@@ -41,8 +39,5 @@ public class CubeMixingSystem : MonoBehaviour
         }
     }
 
-    private void OnLevelRestarted()
-    {
-        Mix();
-    }
+    private void OnLevelRestarted() => Mix();
 }
