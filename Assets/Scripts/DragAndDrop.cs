@@ -18,8 +18,7 @@ public class DragAndDrop : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        mainCamera = Camera.main;
-        
+        mainCamera = Camera.main;  
     }
 
     private void OnEnable()
@@ -63,7 +62,6 @@ public class DragAndDrop : MonoBehaviour
             CubeControlSystem.Instance.ReturnToNearPoint(dragObject);
             EventSystem.OnBlockMove();
         }
-       
     }  
     
 
